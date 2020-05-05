@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:Button text="Restart" name="Continue" class="button" style="margin-left: 0;&#10;margin-right: 0;&#10;margin-top: 0;&#10;margin-bottom: 0;&#10;width: auto;&#10;">
+        <Style src="Common.uss" />
+    </ui:Button>
+    <ui:Button text="Deauthenticate" name="Deauthenticate" class="button" style="margin-left: 0;&#10;margin-right: 0;&#10;margin-top: 0;&#10;margin-bottom: 0;&#10;width: auto;&#10;">
+        <Style src="Common.uss" />
+    </ui:Button>
+</ui:UXML>

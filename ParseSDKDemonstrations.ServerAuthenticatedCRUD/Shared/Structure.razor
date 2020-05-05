@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+
+<div class="sidebar">
+    <div class="top-row pl-4 navbar navbar-dark">
+        <a class="navbar-brand" href="">Server-Authenticated Parse CRUD</a>
+        <button class="navbar-toggler" @onclick="() => HideMenu = !HideMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+
+    <div class="@(HideMenu ? "collapse" : "")" @onclick="() => HideMenu = !HideMenu">
+        <ul class="nav flex-column">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="demonstration">
+                    <span class="oi oi-book" aria-hidden="true"></span> Demonstration
+                </NavLink>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        <a href="https://docs.microsoft.com/en-us/aspnet/" target="_blank">About</a>
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+@code
+{
+    bool HideMenu { get; set; } = true;
+}

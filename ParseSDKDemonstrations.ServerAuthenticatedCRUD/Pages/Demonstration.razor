@@ -1,0 +1,245 @@
+﻿@page "/demonstration"
+@inject ParseClient ParseClient
+@inject AuthenticationDataService AuthenticationData
+
+<h3>Demonstration</h3>
+
+<br />
+
+@switch (Status)
+{
+    case State.Initialization:
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>We're missing some information.</strong> Please enter valid authentication and server connection data on the <a href="">index page</a> before proceeding with the CRUD operations.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        break;
+    case State.Authentication when AuthenticationData.Fresh:
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>This will create a new user!</strong> If the authentication information entered on the <a href="">index page</a> is for an existing account, the following operation will fail. Please correct the state of the Fresh Account checkbox if needed.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <br />
+
+        ShowAuthenticationDetails();
+
+        <button class="btn btn-success" type="button" @onclick="CreateAccountAsync">Create the Account</button>
+        break;
+    case State.Authentication:
+        ShowAuthenticationDetails();
+
+        <button class="btn btn-success" type="button" @onclick="AuthenticateAsync">Authenticate</button>
+        break;
+    case State.Deliberation:
+        @:Fetched User Handle: @ParseClient.GetCurrentUser().Username
+        
+        <br />
+        
+        @:Current Session Token: @ParseClient.GetCurrentUser().SessionToken
+
+        Store = new TextInformationStore { ACL = new ParseACL(ParseClient.GetCurrentUser()) };
+        Store.Bind(ParseClient);
+
+        <br />
+        <br />
+
+        ShowContinueButton();
+        break;
+    case State.Creation:
+        @:Create some text data.
+
+        <br />
+        <br />
+
+        ShowStoreDataCollector();
+        break;
+    case State.Modification:
+        ShowRelevantDataSummarization();
+        ShowStoreDataCollector("Save New Data and Fetch Back From Remote Server");
+        break;
+    case State.Deletion:
+        ShowRelevantDataSummarization();
+
+        <br />
+        <br />
+
+        <button @onclick=DeleteStoreAndCheckWithServerAsync class="btn btn-danger">Delete and Check With Server</button>
+        break;
+    case State.Success:
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>All done!</strong> The CRUD operations were completed successfully. You may run them again by clicking the reset button, or by going back to the <a href="">index page</a> and changing the connection and/or authentication settings.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <br />
+
+        @:Fetched Store State: Deleted
+
+        <br />
+        <br />
+
+        ShowResetButtons();
+        break;
+    case State.Failure:
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Something went wrong.</strong> Please make sure the authentication and server connection information entered on the <a href="">index page</a> is valid.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <br />
+        <br />
+
+        ShowResetButtons();
+        break;
+}
+
+@{
+    void ShowAuthenticationDetails()
+    {
+        <h5>Given Details</h5>
+
+        <br />
+
+        @:Handle: @AuthenticationData.Handle
+
+        <br />
+
+        @:Password: @AuthenticationData.Password
+
+        <br />
+        <br />
+    }
+
+    void ShowContinueButton()
+    {
+        <button class="btn btn-info" type="button" @onclick="Proceed">Continue</button>
+    }
+
+    void ShowResetButtons()
+    {
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-danger" type="button" @onclick="Reset">Go to Start</button>
+            </div>
+            <div class="input-group-append">
+                <button class="btn btn-danger" type="button" @onclick="DeauthenticateAsync">Deauthenticate</button>
+            </div>
+        </div>
+    }
+
+    void ShowStoreDataCollector(string buttonContent = "Save and Fetch Back From Remote Server")
+    {
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Miscellaneous Text Data" @bind="Store.Data" />
+            <div class="input-group-append">
+                <button class="btn btn-success" type="button" @onclick=SaveStoreAndFindOnServerAsync>@buttonContent</button>
+            </div>
+        </div>
+    }
+
+    void ShowRelevantDataSummarization()
+    {
+        @:Store ID: @Store.ObjectId
+
+        <br />
+
+        @:Held Store Text Data: @Store.Data
+
+        <br />
+
+        @:Fetched Store Text Data: @FoundStore.Data
+
+        <br />
+        <br />
+    }
+}
+
+@code
+{
+    enum State
+    {
+        Initialization,
+        Authentication,
+        Deliberation,
+        Creation,
+        Modification,
+        Deletion,
+        Success,
+        Failure
+    }
+
+    State Status { get; set; }
+
+    TextInformationStore FoundStore { get; set; }
+
+    TextInformationStore Store { get; set; }
+
+    protected override void OnInitialized() => Status = new[] { AuthenticationData.Handle, AuthenticationData.Password, ParseServerConnectionData.Access, ParseServerConnectionData.HostURI, ParseServerConnectionData.SoftwareID }.Any(String.IsNullOrWhiteSpace) ? default : State.Authentication;
+    void Proceed() => Status++;
+
+    void Reset() => Status = State.Authentication;
+
+    async Task AuthenticateAsync()
+    {
+        if (await ParseClient.LogInAsync(AuthenticationData.Handle, AuthenticationData.Password) is { })
+        {
+            Proceed();
+        }
+        else Status = State.Failure;
+    }
+
+    async Task CreateAccountAsync()
+    {
+        ParseUser user = new ParseUser { Username = AuthenticationData.Handle, Password = AuthenticationData.Password };
+
+        user.Bind(ParseClient);
+        await user.SignUpAsync();
+
+        Proceed();
+    }
+
+    async Task SaveStoreAndFindOnServerAsync()
+    {
+        if (Store is { })
+        {
+            await Store.SaveAsync();
+            FoundStore = await ParseClient.GetQuery<TextInformationStore>().WhereEqualTo("objectId", Store.ObjectId).FirstAsync();
+
+            if (String.Equals(FoundStore.Data, Store.Data))
+            {
+                Proceed();
+                return;
+            }
+        }
+
+        Status = State.Failure;
+    }
+
+    async Task DeleteStoreAndCheckWithServerAsync()
+    {
+        await Store.DeleteAsync();
+
+        if (await ParseClient.GetQuery<TextInformationStore>().WhereEqualTo("objectId", Store.ObjectId).FirstOrDefaultAsync() is { })
+        {
+            Status = State.Failure;
+            return;
+        }
+
+        Proceed();
+    }
+
+    async Task DeauthenticateAsync()
+    {
+        await ParseClient.LogOutAsync();
+        Status = 0;
+    }
+}

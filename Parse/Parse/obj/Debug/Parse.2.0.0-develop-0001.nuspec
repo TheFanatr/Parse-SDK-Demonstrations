@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Parse</id>
+    <version>2.0.0-develop-0001</version>
+    <authors>Parse</authors>
+    <owners>Parse</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://parseplatform.org/</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/parse-community/parse-community.github.io/master/img/favicon/favicon-194x194.png</iconUrl>
+    <description>This is the official package for the Parse .NET Standard SDK. Add a cloud backend to any platform supporting .NET Standard 2.0 with this simple-to-use SDK.</description>
+    <copyright>Copyright © Parse 2020. All rights reserved.</copyright>
+    <tags>Parse netstandard2.0 parse-platform backend sdk netstandard app</tags>
+    <repository type="GitHub" url="https://github.com/parse-community/Parse-SDK-dotNET/" />
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="OpenCover" version="4.6.519" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\bin\Debug\netstandard2.0\Parse.dll" target="lib\netstandard2.0\Parse.dll" />
+    <file src="C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\bin\Debug\netstandard2.0\Parse.xml" target="lib\netstandard2.0\Parse.xml" />
+  </files>
+</package>

@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement>
+        <Style src="Common.uss" />
+        <ui:VisualElement style="align-items: center;&#10;justify-content: center;&#10;margin-left: 26px;&#10;margin-right: 26px;&#10;margin-top: 26px;&#10;margin-bottom: 26px;&#10;">
+            <ui:Label text="Session ID" style="left: 0;&#10;position: absolute;&#10;align-items: flex-start;&#10;justify-content: center;&#10;" />
+            <ui:Label name="SessionID" style="position: absolute;&#10;align-items: flex-end;&#10;justify-content: center;&#10;right: 0;&#10;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="align-items: center;&#10;justify-content: center;&#10;margin-left: 26px;&#10;margin-right: 26px;&#10;margin-top: 26px;&#10;margin-bottom: 26px;&#10;">
+            <ui:Label text="Local Text Store Data" style="left: 0;&#10;position: absolute;&#10;align-items: flex-start;&#10;justify-content: center;&#10;" />
+            <ui:Label name="LocalTextStoreData" style="position: absolute;&#10;align-items: flex-end;&#10;justify-content: center;&#10;right: 0;&#10;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="align-items: center;&#10;justify-content: center;&#10;margin-left: 26px;&#10;margin-right: 26px;&#10;margin-top: 26px;&#10;margin-bottom: 26px;&#10;">
+            <ui:Label text="Fetched Text Store Data" style="left: 0;&#10;position: absolute;&#10;align-items: flex-start;&#10;justify-content: center;&#10;" />
+            <ui:Label name="FetchedTextStoreData" style="position: absolute;&#10;align-items: flex-end;&#10;justify-content: center;&#10;right: 0;&#10;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:TextField picking-mode="Ignore" label="New Text Data" name="TextData" style="margin-left: 0;&#10;margin-right: 0;&#10;margin-top: 0;&#10;margin-bottom: 0;&#10;">
+        <Style src="Common.uss" />
+    </ui:TextField>
+    <ui:Button text="Publish New Text Store Data" name="Continue" class="button" style="margin-left: 0;&#10;margin-right: 0;&#10;margin-top: 0;&#10;margin-bottom: 0;&#10;width: auto;&#10;">
+        <Style src="Common.uss" />
+    </ui:Button>
+</ui:UXML>

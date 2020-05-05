@@ -1,0 +1,12 @@
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\bin\Release\netstandard2.0\Parse.xml
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\bin\Release\netstandard2.0\Parse.deps.json
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\bin\Release\netstandard2.0\Parse.dll
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\bin\Release\netstandard2.0\Parse.pdb
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.csprojAssemblyReference.cache
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.Resources.resources
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.csproj.GenerateResource.cache
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.csproj.CoreCompileInputs.cache
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.AssemblyInfoInputs.cache
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.AssemblyInfo.cs
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.dll
+C:\Users\alexf\Source\Repos\ParseSDKDemonstrations\Parse\Parse\obj\Release\netstandard2.0\Parse.pdb

@@ -1,0 +1,3 @@
+[submodule "Parse"]
+	path = Parse
+	url = https://github.com/TheFanatr/Parse-SDK-dotNET

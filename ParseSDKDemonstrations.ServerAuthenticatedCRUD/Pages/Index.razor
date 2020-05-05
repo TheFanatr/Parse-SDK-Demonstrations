@@ -1,0 +1,67 @@
+﻿@page "/"
+@inject AuthenticationDataService AuthenticationData
+
+<h1>Welcome to the Parse SDK Server-Authenticated CRUD demonstration!</h1>
+
+This site authenticates a user with a Parse Server using the .NET Parse SDK then allows the user to perform CRUD operations.
+
+<br />
+<br />
+
+<h3 for="host-server-address">Parse Server Connection Data</h3>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">ID</span>
+    </div>
+    <input type="text" class="form-control" @bind=ParseServerConnectionData.SoftwareID aria-describedby="basic-addon1" placeholder="Application ID" />
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon2">Host URI</span>
+        <span class="input-group-text" id="basic-addon2">https://</span>
+    </div>
+    <input type="url" formnovalidate class="form-control" @bind=ParseServerConnectionData.HostURI aria-describedby="basic-addon2" placeholder="Parse Server Host URI" />
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon3">Key</span>
+    </div>
+    <input type="text" class="form-control" @bind=ParseServerConnectionData.Access aria-describedby="basic-addon3" placeholder=".NET Access Key" />
+    <div class="input-group-append">
+        <button type="button" class="btn btn-primary" @onclick="Initialize">Save</button>
+    </div>
+</div>
+
+<br />
+
+<h3 for="host-server-address">Authentication Data</h3>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon3">Handle</span>
+        <span class="input-group-text" id="basic-addon3">@@</span>
+    </div>
+    <input type="text" class="form-control" aria-describedby="basic-addon3" @bind=AuthenticationData.Handle placeholder="Handle" />
+</div>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon4">Password</span>
+    </div>
+    <input type="password" class="form-control" aria-describedby="basic-addon4" @bind=AuthenticationData.Password placeholder="Password" />
+</div>
+<div class="form-check">
+    <input class="form-check-input position-static" type="checkbox" id="fresh-account-check-box" @bind=AuthenticationData.Fresh aria-label="Indicates that the information entered above is for a fresh account.">
+    <label class="form-check-label" for="fresh-account-check-box">Fresh Account</label>
+</div>
+
+@code
+{
+    void Initialize()
+    {
+        ParseClient client = new ParseClient(ParseServerConnectionData.SoftwareID, ParseServerConnectionData.HostURI.Contains("http") ? ParseServerConnectionData.HostURI : $"https://{ParseServerConnectionData.HostURI}", ParseServerConnectionData.Access, default, new ConcurrentUserServiceHubCloner { });
+
+        client.Publicize();
+        client.AddValidClass<TextInformationStore>();
+    }
+}

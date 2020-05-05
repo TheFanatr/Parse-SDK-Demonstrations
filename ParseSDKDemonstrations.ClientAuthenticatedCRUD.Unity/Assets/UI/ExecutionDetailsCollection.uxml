@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement>
+        <Style src="Common.uss" />
+    </ui:VisualElement>
+    <ui:Foldout text="Server Connection Data">
+        <Style src="Common.uss" />
+        <ui:TextField picking-mode="Ignore" label="Application ID" name="SoftwareID" />
+        <ui:TextField picking-mode="Ignore" label="Host URI" name="HostURI" />
+        <ui:TextField picking-mode="Ignore" label=".NET Access Key" name="Access" />
+    </ui:Foldout>
+    <ui:Foldout text="Authentication Information">
+        <Style src="Common.uss" />
+        <ui:TextField picking-mode="Ignore" label="Handle" name="Handle" />
+        <ui:TextField picking-mode="Ignore" label="Password" name="Password" password="true" />
+        <ui:Toggle label="Fresh Account" name="Fresh" />
+    </ui:Foldout>
+    <ui:Button text="Save Server Details" name="Save" style="margin-left: 0;&#10;margin-right: 0;&#10;margin-top: 0;&#10;margin-bottom: 0;&#10;width: auto;&#10;">
+        <Style src="Common.uss" />
+    </ui:Button>
+    <ui:Button text="Continue" name="Continue" class="button" style="width: auto;&#10;margin-left: 0;&#10;margin-right: 0;&#10;margin-top: 0;&#10;margin-bottom: 0;&#10;">
+        <Style src="Common.uss" />
+    </ui:Button>
+</ui:UXML>
